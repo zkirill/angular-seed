@@ -16,7 +16,6 @@ class RollupNG2 {
   }
   resolveId(id: string, from: string) {
     if (id.startsWith('rxjs/')) {
-      console.log(id);
       return `${__dirname}/../../../node_modules/rxjs-es/${id.replace('rxjs/', '')}.js`;
     }
     return undefined;
@@ -26,31 +25,12 @@ class RollupNG2 {
 const rollupNG2 = (config?: any) => new RollupNG2(config);
 
 const rollupConfig = {
-  entry: join(TMP_DIR, BOOTSTRAP_MODULE),
+  entry: join(TMP_DIR, 'app', 'vendor.ts'),
   plugins: [
     rollupNG2(),
     nodeResolve({
       jsnext: true, main: true
     })
-  ],
-  external: [
-    "rxjs/Subject",
-    "rxjs/observable/PromiseObservable",
-    "rxjs/operator/toPromise",
-    "rxjs/Observable",
-    "rxjs/add/operator/map",
-    "rxjs/add/operator/mergeMap",
-    "rxjs/add/operator/mergeAll",
-    "rxjs/add/operator/reduce",
-    "rxjs/add/operator/every",
-    "rxjs/add/observable/from",
-    "rxjs/add/observable/forkJoin",
-    "rxjs/observable/of",
-    "rxjs/BehaviorSubject",
-    "rxjs/add/operator/toPromise",
-    "rxjs/observable/forkJoin",
-    "rxjs/observable/fromPromise",
-    "rxjs/add/operator/catch"
   ]
 };
 
@@ -62,7 +42,8 @@ export = (done: any) => {
     .then((bundle: any) => {
       return bundle.write({
         format: 'iife',
-        dest: join(TMP_DIR, JS_PROD_APP_BUNDLE)
+        moduleName: 'vendor',
+        dest: join(TMP_DIR, 'app', 'vendor.2015.js')
       });
     });
 };
