@@ -31,6 +31,9 @@ export class ProjectConfig extends SeedConfig {
       // {src: `${this.CSS_SRC}/path-to-lib/test-lib.css`, inject: true, vendor: false},
     ];
 
+    this.SYSTEM_CONFIG_DEV.paths['lodash'] = `${this.APP_BASE}node_modules/lodash/`;
+    this.SYSTEM_BUILDER_CONFIG.packages['lodash'] = { main: 'lodash.js', defaultExtension: 'js' };
+
     /* Add to or override NPM module configurations: */
     // this.mergeObject(this.PLUGIN_CONFIGS['browser-sync'], { ghostMode: false });
   }
